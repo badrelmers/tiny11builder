@@ -251,6 +251,7 @@ echo WARNING: This will not work if you are using wrong/no Product Key for your 
 echo          check this KB: https://learn.microsoft.com/en-us/troubleshoot/mem/configmgr/os-deployment/os-deployment-task-sequence-not-continue
 timeout /t 5 /nobreak > nul
 echo.powershell "Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser -Force" > %mountDir%\Windows\Setup\Scripts\SetupComplete.cmd
+echo.reg delete "HKCU\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Taskband" /v "Favorites" /f >> %mountDir%\Windows\Setup\Scripts\SetupComplete.cmd
 echo.powershell "& c:\Windows\Setup\Scripts\FirstStartup.ps1" >> %mountDir%\Windows\Setup\Scripts\SetupComplete.cmd
 
 rem ****************************************************************************
@@ -286,7 +287,7 @@ reg add "HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTa
 
 echo Disabling Teams
 reg add "HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Communications" /v "ConfigureChatAutoInstall" /t REG_DWORD /d 0 /f > nul 2>&1
-reg add "HKLM\Software\Policies\Microsoft\Windows\Windows Chat" /v ChatIcon /t REG_DWORD /d 2 /f > nul 2>&1
+reg add "HKLM\zSoftware\Policies\Microsoft\Windows\Windows Chat" /v ChatIcon /t REG_DWORD /d 2 /f > nul 2>&1
 
 echo Setting all services to start manually
 reg add "HKLM\zSOFTWARE\CurrentControlSet\Services" /v Start /t REG_DWORD /d 3 /f
